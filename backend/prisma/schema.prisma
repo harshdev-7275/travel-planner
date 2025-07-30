@@ -1,0 +1,96 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+model User {
+  id                String   @id @default(uuid())
+  email             String   @unique
+  name              String?
+  travelPreferences Json?
+  trips             Trip[]
+  createdAt         DateTime @default(now())
+  notifications     Notification[]
+}
+
+model Trip {
+  id        String     @id @default(uuid())
+  user      User       @relation(fields: [userId], references: [id])
+  userId    String
+  tripName  String
+  startDate DateTime
+  endDate   DateTime
+  status    TripStatus
+  itinerary ItineraryItem[]
+}
+
+model ItineraryItem {
+  id        String     @id @default(uuid())
+  trip      Trip       @relation(fields: [tripId], references: [id])
+  tripId    String
+  title     String
+  type      ItineraryType
+  location  Json?
+  startTime DateTime
+  endTime   DateTime
+  status    ItineraryStatus
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String
+  tripId    String
+  message   String
+  type      NotificationType
+  read      Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model ARContent {
+  id        String   @id @default(uuid())
+  title     String
+  location  Json?
+  assetUrl  String
+  description String?
+  tags      String[]
+}
+
+enum TripStatus {
+  planned
+  ongoing
+  completed
+  cancelled
+}
+
+enum ItineraryType {
+  flight
+  hotel
+  activity
+  transit
+}
+
+enum ItineraryStatus {
+  scheduled
+  delayed
+  cancelled
+  done
+}
+
+enum NotificationType {
+  weather
+  flight
+  itinerary_update
+}

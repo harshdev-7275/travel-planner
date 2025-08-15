@@ -13,11 +13,17 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@google-cloud/text-to-speech": "^6.2.0",
+    "@mendable/firecrawl-js": "^1.29.3",
     "@prisma/client": "^6.12.0",
+    "@types/lunr": "^2.3.7",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "groq-sdk": "^0.30.0",
+    "jsonwebtoken": "^9.0.2",
+    "lunr": "^2.3.9",
     "multer": "^2.0.2",
     "passport": "^0.7.0",
     "pino": "^9.7.0",
@@ -25,8 +31,10 @@
     "zod": "^4.0.14"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
+    "@types/jsonwebtoken": "^9.0.10",
     "prisma": "^6.12.0",
     "ts-node": "^10.9.2"
   }
